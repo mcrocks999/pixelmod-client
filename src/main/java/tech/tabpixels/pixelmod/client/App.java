@@ -1,13 +1,11 @@
 package tech.tabpixels.pixelmod.client;
 
-/**
- * Hello world!
- *
- */
 public class App 
 {
+	public static String VERSION = "0.0.1-SNAPSHOT";
+	
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        Client.create();
     }
 }
