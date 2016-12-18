@@ -23,17 +23,18 @@ public class SimpleModInstaller {
 	public static JFrame frame;
 	public static JPanel contentPane;
 	public static JTextField txtappdataminecraft;
-	public static File file;
-	public static Boolean fileS = false;
+	public static File[] files;
+	public static Boolean fileSS = false;
 	
 	/**
 	 * @wbp.parser.entryPoint
 	 */
 	public static void create() {
 		frame = new JFrame();
+		frame.setResizable(false);
 		frame.setTitle("Simple Mod Installer");
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.setBounds(100, 100, 272, 228);
+		frame.setBounds(100, 100, 265, 228);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -45,21 +46,22 @@ public class SimpleModInstaller {
 		
 		JLabel lblSimpleModInstaller = new JLabel("Simple Mod Installer");
 		lblSimpleModInstaller.setFont(new Font("Trebuchet MS", Font.PLAIN, 22));
-		lblSimpleModInstaller.setBounds(10, 11, 226, 35);
+		lblSimpleModInstaller.setBounds(10, 11, 229, 35);
 		panel.add(lblSimpleModInstaller);
 		
-		JButton btnChooseAFile = new JButton("Choose a mod file");
+		JButton btnChooseAFile = new JButton("Select mods");
 		btnChooseAFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setMultiSelectionEnabled(true);
 				int returnVal = fileChooser.showOpenDialog(fileChooser);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
-				     file = fileChooser.getSelectedFile();
-				     fileS = true;
+				     files = fileChooser.getSelectedFiles();
+				     fileSS = true;
 				}
 			}
 		});
-		btnChooseAFile.setBounds(10, 57, 226, 23);
+		btnChooseAFile.setBounds(10, 57, 229, 23);
 		panel.add(btnChooseAFile);
 		
 		JLabel lblMinecraftInstallation = new JLabel("Minecraft installation / instance:");
@@ -68,17 +70,20 @@ public class SimpleModInstaller {
 		
 		txtappdataminecraft = new JTextField();
 		txtappdataminecraft.setText(System.getenv("AppData")+"/.minecraft");
-		txtappdataminecraft.setBounds(10, 116, 226, 20);
+		txtappdataminecraft.setBounds(10, 116, 229, 20);
 		panel.add(txtappdataminecraft);
 		txtappdataminecraft.setColumns(10);
 		
 		JButton btnNewButton = new JButton("Install");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (fileS)
+				if (fileSS)
 				{
 					try {
-						Files.copy(file.toPath(), new File(txtappdataminecraft.getText()+"/mods/"+file.getName()).toPath());
+						for (File file : files)
+						{
+							Files.copy(file.toPath(), new File(txtappdataminecraft.getText()+"/mods/"+file.getName()).toPath());
+						}
 					} catch (IOException e1) {
 						JOptionPane.showMessageDialog(null, "Sorry! An error occured while copying the mod.");
 						e1.printStackTrace();
@@ -90,7 +95,7 @@ public class SimpleModInstaller {
 				}
 			}
 		});
-		btnNewButton.setBounds(10, 147, 226, 21);
+		btnNewButton.setBounds(10, 147, 229, 21);
 		panel.add(btnNewButton);
 		frame.setVisible(true);
 	}
