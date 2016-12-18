@@ -22,7 +22,7 @@ public class Client {
 		frame = new JFrame();
 		frame.setTitle("PixelMod ["+App.VERSION+"]");
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.setBounds(100, 100, 440, 300);
+		frame.setBounds(100, 100, 272, 228);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
